@@ -15,30 +15,23 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class NextMovePanel extends JPanel implements ActionListener{
-	private static Random r=new Random();
-	private static GamePanel gamePanel=new GamePanel();
-	private static final Color backgroundColor = new Color(65, 65, 65);
-	private final  Dimension nextMovePanelSize = new Dimension(150, 79);
-	
-	//private final JLabel nextMoveLabel=new JLabe("Next Balls",JLabel.CENTER);
-	private static JButton nextMoveButton=new JButton("Next Balls");
-	private JPanel colorPanel=new JPanel();
-	
-	private static JLabel []colorLabel=new JLabel[3]; 
-	private static int []colorLabelIconIndex=new int[3];
-	private static Icon []nextColorIcon=new ImageIcon[7];
-	public void initNextMovePanel(){
-		setBackground(backgroundColor);
-		setSize(nextMovePanelSize);
+public class NextMovePanel extends JPanel implements ActionListener, Constants {
+	private static Random r = new Random();
+	private static GamePanel gamePanel = new GamePanel();
+
+	private static JButton nextMoveButton = new JButton("Next Balls");
+	private JPanel colorPanel = new JPanel();
+
+	private static JLabel[] colorLabel = new JLabel[NEXT_COLOR_ARRAY_LENGHT];
+	private static int[] colorLabelIconIndex = new int[NEXT_COLOR_ARRAY_LENGHT];
+	private static Icon[] nextColorIcon = new ImageIcon[ICON_ARRAY_LENGHT];
+
+	public void initNextMovePanel() {
+		setBackground(BACKGROUND_COLOR);
+		setSize(NEXT_MOVE_PANEL_SIZE);
 		setLayout(new GridLayout(2, 1));
-		
-		/*
-		nextMoveLabel.setFont(new Font("Arial", 0, 14));
-		nextMoveLabel.setForeground(Color.WHITE);
-		add(nextMoveLabel);
-		 */
-		nextMoveButton.setBackground(backgroundColor);
+
+		nextMoveButton.setBackground(BACKGROUND_COLOR);
 		nextMoveButton.setFocusPainted(false);
 		nextMoveButton.setForeground(Color.white);
 		nextMoveButton.setRolloverEnabled(false);
@@ -46,53 +39,72 @@ public class NextMovePanel extends JPanel implements ActionListener{
 		nextMoveButton.setContentAreaFilled(false);
 		nextMoveButton.addActionListener(this);
 		add(nextMoveButton);
-		
-		
+
 		colorPanel.setLayout(new FlowLayout());
-		colorPanel.setBackground(backgroundColor);
+		colorPanel.setBackground(BACKGROUND_COLOR);
 		add(colorPanel);
-		
+
 		initNextColorIcon();
 		initNextColorLabel();
 		randomColorLabel();
 		initColorPanel();
-		
+
 	}
-	
+
+	/*
+	 * veradardznum e hajord guyneri generacvac zangavac@ hamapatasxan
+	 * indexnerov
+	 */
 	public static int[] getColorLabelIconIndex() {
 		return colorLabelIconIndex;
 	}
-	public  void randomColorLabel(){
-		for(int i=0;i<colorLabel.length;i++){
-			colorLabelIconIndex[i]=r.nextInt(7);
-			//System.out.println(colorLabelIconIndex[i]);
+
+	/*
+	 * generacnum e hajord 3 guyner@
+	 */
+	public void randomColorLabel() {
+		for (int i = 0; i < colorLabel.length; i++) {
+			colorLabelIconIndex[i] = r.nextInt(ICON_ARRAY_LENGHT);
 			colorLabel[i].setIcon(nextColorIcon[colorLabelIconIndex[i]]);
 		}
 	}
-	private void initColorPanel(){
-		for(int i=0;i<colorLabel.length;i++){
+
+	/*
+	 * setup and add Color Label
+	 */
+	private void initColorPanel() {
+		for (int i = 0; i < colorLabel.length; i++)
 			colorPanel.add(colorLabel[i]);
-		}
-	}
-	private void initNextColorLabel() {
-		for(int i=0;i<colorLabel.length;i++){
-			colorLabel[i]=new JLabel();
-		}
-	}
-	private void initNextColorIcon() {
-		//String[] iconName = { "aqua", "blue", "green", "pink", "red", "violet", "yellow" };
-		for (int i = 0; i <nextColorIcon.length; i++) {
-			nextColorIcon[i] = new ImageIcon("image/small/" + Integer.toString(i+1) + ".png");
-		}
 	}
 
+	/*
+	 * Initilization next color label
+	 */
+	private void initNextColorLabel() {
+		for (int i = 0; i < colorLabel.length; i++)
+			colorLabel[i] = new JLabel();
+
+	}
+
+	/*
+	 * Initilization next color icon
+	 */
+	private void initNextColorIcon() {
+		for (int i = 0; i < nextColorIcon.length; i++)
+			nextColorIcon[i] = new ImageIcon("image/small/" + Integer.toString(i + 1) + ".png");
+
+	}
+	/*
+	 * Next Move Button 
+	 * ACTION_LISTENER
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==nextMoveButton){
+		if (e.getSource() == nextMoveButton) {
 			gamePanel.threeRandomButton(getColorLabelIconIndex());
 			randomColorLabel();
 		}
-		
+
 	}
 
 }

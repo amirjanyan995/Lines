@@ -13,20 +13,15 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements ActionListener, Constants {
 
-	private static ParalelPatok patok1=new ParalelPatok();
 	private static Random r = new Random();
-	private static NextMovePanel nextColorPanel = new NextMovePanel();
+	private NextMovePanel nextColorPanel = new NextMovePanel();
 
-	private final Dimension panelSize = new Dimension(GAME_PANEL_WIDTH, GAME_PANEL_HEIGTH);
 	private static Icon[] buttonIcon;
+	private static Icon[] smallButtonIcon;
 	private static ClickButton[][] button;
 
-	private static final Color buttonColor = new Color(80, 80, 80);
-	private static final Color buttonClickedColor = new Color(120, 120, 120);
-	private final Color backgroundColor = new Color(65, 65, 65);
-
-	private static boolean clicked = false;
-	private static int lastX = 0, lastY = 0;
+	private boolean clicked = false;
+	private int lastX = 0, lastY = 0;
 
 	private static int[][] gameArray;
 	private static int[][] newGameArray = new int[ARRAY_LENGTH][ARRAY_LENGTH];
@@ -35,8 +30,8 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 	 * Xaxayin dashti stexcum
 	 */
 	public void InitGamePanel() {
-		setBackground(backgroundColor);
-		setSize(panelSize);
+		setBackground(BACKGROUND_COLOR);
+		setSize(GAME_PANEL_SIZE);
 		setLayout(new GridLayout(ARRAY_LENGTH, ARRAY_LENGTH));
 
 		initButtonIcon();
@@ -49,7 +44,7 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 	}
 
 	/*
-	 * nerqin stugman zangvaci stexcum
+	 * nerqin stugvox zangvaci stexcum
 	 */
 	private int[][] initGameArray(int[][] gameArray) {
 		gameArray = new int[ARRAY_LENGTH][ARRAY_LENGTH];
@@ -79,9 +74,11 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 	 * Initilization icon name array Initilization button icon array
 	 */
 	private void initButtonIcon() {
-		buttonIcon = new ImageIcon[7];
+		buttonIcon = new ImageIcon[ICON_ARRAY_LENGHT];
+		smallButtonIcon = new ImageIcon[ICON_ARRAY_LENGHT];
 		for (int i = 0; i < buttonIcon.length; i++) {
 			buttonIcon[i] = new ImageIcon("image/" + Integer.toString(i + 1) + ".png");
+			smallButtonIcon[i] = new ImageIcon("image/small/" + Integer.toString(i + 1) + ".png");
 		}
 	}
 
@@ -100,8 +97,9 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 			System.out.println();
 		}
 	}
+
 	/*
-	 * 3 patahakan  guyneri nshanakum
+	 * 3 patahakan guyneri nshanakum
 	 */
 	private void threeRandomButton() {
 		int x = 0;
@@ -123,33 +121,35 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 			}
 		}
 	}
+
 	/*
-	 * 3 patahakan guyneri texadrum 
+	 * 3 patahakan guyneri texadrum
+	 * 
 	 * @param- colorIconLabelIndex
 	 */
 	static void threeRandomButton(int[] colorIconLabelIndex) {
-		int x = 0;
-		int y = 0;
-		
+		int[] x = new int[3];
+		int[] y = new int[3];
 		if (dashtizbaxvacucyun() == 0)
 			return;
-		
-		for (int i = 0; i < 3; i++) {
+
+		for (int i = 0; i < NEXT_COLOR_ARRAY_LENGHT; i++) {
+
 			while (true) {
-				x = r.nextInt(ARRAY_LENGTH);
-				y = r.nextInt(ARRAY_LENGTH);
-				if (button[x][y].getIcon() == null) {
-					gameArray[x][y] = colorIconLabelIndex[i] + 1;
-					button[x][y].setIcon(buttonIcon[colorIconLabelIndex[i]]);
-					buttonClickAction(GameCheck.headerCheck(x, y, gameArray));
+				x[i] = r.nextInt(ARRAY_LENGTH);
+				y[i] = r.nextInt(ARRAY_LENGTH);
+				if (button[x[i]][y[i]].getIcon() == null) {
+					gameArray[x[i]][y[i]] = colorIconLabelIndex[i] + 1;
+					button[x[i]][y[i]].setIcon(buttonIcon[colorIconLabelIndex[i]]);
+					buttonClickAction(GameCheck.headerCheck(x[i], y[i], gameArray));
 					break;
 				} else {
 					continue;
 				}
-
 			}
 		}
 	}
+
 	/*
 	 * stugum e dhashtum azat vandakneri qanak@
 	 */
@@ -163,15 +163,16 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 		}
 		return num;
 	}
+
 	/*
-	 * katarum e stugum  lrazvac hatvacneri hamar 
-	 * ev maqrum bolor lracvac hatvacner@ xaxayin dashtic
+	 * katarum e stugum lrazvac hatvacneri hamar ev maqrum bolor lracvac
+	 * hatvacner@ xaxayin dashtic
 	 */
 	public static boolean buttonClickAction(int array[][]) {
 		boolean check = false;
 		int balls = 0;
 		int score = 0;
-		
+
 		for (int i = 0; i < array.length; i++) {
 			for (int j = 0; j < array[i].length; j++) {
 				newGameArray[i][j] = array[i][j];
@@ -180,7 +181,7 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 
 		for (int i = 0; i < newGameArray.length; i++) {
 			for (int j = 0; j < newGameArray[i].length; j++) {
-				if (newGameArray[i][j] != 0) 
+				if (newGameArray[i][j] != 0)
 					balls++;
 				if (newGameArray[i][j] != gameArray[i][j]) {
 					check = true;
@@ -192,24 +193,25 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 		}
 		InfoPanel.setBallsCounter(balls);
 		InfoPanel.setScoreLabelCounter(InfoPanel.getScoreLabelCounter() + (score * 2));
-		
+
 		return check;
 	}
+
 	/*
-	 * NEW GAME
+	 * NEW GAME _ RESTART
 	 */
 	public void ResetGamePanel() {
 		gameArray = initGameArray(gameArray);
 		for (int i = 0; i < button.length; i++) {
 			for (int j = 0; j < button[i].length; j++) {
 				button[i][j].setIcon(null);
-				button[i][j].setBackground(buttonColor);
+				button[i][j].setBackground(BUTTON_COLOR);
 			}
 		}
 		threeRandomButton();
 		nextColorPanel.randomColorLabel();
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (int i = 0; i < button.length; i++) {
@@ -222,30 +224,27 @@ public class GamePanel extends JPanel implements ActionListener, Constants {
 
 							button[i][j].setIcon(button[lastX][lastY].getIcon());
 							button[lastX][lastY].setIcon(null);
-							button[lastX][lastY].setBackground(buttonColor);
+							button[lastX][lastY].setBackground(BUTTON_COLOR);
+
 							gameArray[i][j] = gameArray[lastX][lastY];
 							gameArray[lastX][lastY] = 0;
 
 							clicked = false;
-							
-							//patok1.run(i,j,gameArray);
-							
-							
+
 							if (!buttonClickAction(GameCheck.headerCheck(i, j, gameArray)))
 								threeRandomButton(nextColorPanel.getColorLabelIconIndex());
 
 							nextColorPanel.randomColorLabel();
-								
-							//showGmaeArray();
 						} else {
-							button[lastX][lastY].setBackground(buttonColor);
-							button[i][j].setBackground(buttonClickedColor);
+							button[lastX][lastY].setBackground(BUTTON_COLOR);
+							button[i][j].setBackground(BUTTON_CLICKED_COLOR);
+							
 							lastX = i;
 							lastY = j;
 						}
 					} else if (button[i][j].getIcon() != null) {
-						button[lastX][lastY].setBackground(buttonColor);
-						button[i][j].setBackground(buttonClickedColor);
+						button[lastX][lastY].setBackground(BUTTON_COLOR);
+						button[i][j].setBackground(BUTTON_CLICKED_COLOR);
 						clicked = true;
 						lastX = i;
 						lastY = j;

@@ -72,8 +72,6 @@ public class GameCheck implements Constants {
 			blokEnd = 0;
 		}
 
-		// System.out.println("start->"+blokStart);
-		// System.out.println("end->"+blokEnd);
 		if (j >= blokStart && j <= blokEnd && counter >= BLOK_LENGTH) {
 			for (int index = blokStart; index <= blokEnd; index++) {
 				mas1[i][index] = 0;
@@ -311,15 +309,13 @@ public class GameCheck implements Constants {
 
 		if (q && counter >= BLOK_LENGTH) {
 			if (i + j <= (ARRAY_LENGTH - 1)) {
-				for (int m = blokStartI, n = blokStartJ; n >= blokEndJ; m++, n--) {
-					// System.out.println("i-"+m+" j-"+n);
+				for (int m = blokStartI, n = blokStartJ; n >= blokEndJ; m++, n--)
 					mas4[m][n] = 0;
-				}
+
 			} else {
-				for (int m = blokStartI, n = blokStartJ; m <= blokEndI; m++, n--) {
-					// System.out.println("i-"+m+" j-"+n);
+				for (int m = blokStartI, n = blokStartJ; m <= blokEndI; m++, n--)
 					mas4[m][n] = 0;
-				}
+
 			}
 		}
 	}

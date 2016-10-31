@@ -1,6 +1,7 @@
 package ru.game.frameHeaderFile;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,35 +12,34 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class ButtonReset extends JButton implements ActionListener {
+	private final Dimension RESET_BUTTON_SIZE=new Dimension(90, 35);
+	private static final Font RELEASED_FONT = new Font("Arial", 0, 14);
+	
 	private static InfoPanel infoPanel = new InfoPanel();
 	private static GamePanel gamePanel = new GamePanel();
-
-	private static final Font presedFont = new Font("Arial", 0, 16);
-	private static final Font releasedFont = new Font("Arial", 0, 14);
-
+	
 	public ButtonReset() {
 		setText("Reset");
 		setForeground(Color.white);
-		setSize(90, 35);
+		setSize(RESET_BUTTON_SIZE);
 		setFocusPainted(false);
 		setBackground(new Color(65, 65, 65));
 		setRolloverEnabled(false);
-		setFont(releasedFont);
+		setFont(RELEASED_FONT);
 		setBorder(BorderFactory.createLineBorder(Color.white));
 
 		setContentAreaFilled(false);
-		// setContentAreaFilled(true);
 		addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				setFont(releasedFont);
+				setFont(RELEASED_FONT);
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				setFont(presedFont);
+				setFont(RELEASED_FONT);
 
 			}
 
@@ -47,7 +47,7 @@ public class ButtonReset extends JButton implements ActionListener {
 			public void mouseExited(MouseEvent arg0) {
 				setBorder(BorderFactory.createLineBorder(Color.white));
 				setForeground(Color.white);
-				setFont(releasedFont);
+				setFont(RELEASED_FONT);
 			}
 
 			@Override

@@ -13,8 +13,7 @@ public class InfoPanel extends JPanel implements Constants {
 	private static int scoreResult=0; 
 	
 	private final Color backgroundColor = new Color(65, 65, 65);
-	private final Dimension infoPanelSize = new Dimension(INFO_PANELWIDTH, INFO_PANEL_HEIGTH);
-	
+		
 	private NextMovePanel nextMovePanel=new NextMovePanel();
 	private ButtonReset buttonReset=new ButtonReset();
 	
@@ -24,8 +23,8 @@ public class InfoPanel extends JPanel implements Constants {
 	private final Font textFont=new Font("Arial",0,15);
 	
 	public void initInfoPanel(){
-		setBackground(backgroundColor);
-		setSize(infoPanelSize);
+		setBackground(BACKGROUND_COLOR);
+		setSize(INFO_PANEL_SIZE);
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(85, 85, 85)));
 		setLayout(null);
 		
