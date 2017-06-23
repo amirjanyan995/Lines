@@ -10,13 +10,9 @@ public class DFS {
 	private static boolean []used;
 	private static int start;
 	private static int end;
-	//private int [][]mas=new int[ARRAY_LENGHT][ARRAY_LENGHT];
 	public static boolean dfs(int [][]mas,int startI,int startJ,int endI,int endJ){
 		start=(startI*ARRAY_LENGHT)+startJ;
 		end=(endI*ARRAY_LENGHT)+endJ;
-		
-		//System.out.println(start);
-		//System.out.println(end);
 		collection=new ArrayList<ArrayList<Integer>>(ARRAY_LENGHT * ARRAY_LENGHT);
 		
 		used=new boolean[ARRAY_LENGHT*ARRAY_LENGHT];
@@ -65,11 +61,6 @@ public class DFS {
 				collection.add(col);
 			}
 		}
-		//artacel graf@ List-i tesqov
-		/*
-		for(int i=0;i<collection.size();i++){
-			System.out.println(i+"-->"+collection.get(i));
-		}*/
 	}
 	private static boolean checkGref(int start,int end){
 		Stack<Integer> stack=new Stack<Integer>();
